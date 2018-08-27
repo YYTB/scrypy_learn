@@ -25,6 +25,7 @@ class BooksSpider(scrapy.Spider):
             # 书价信息在 <p class="price_color">的TEXT中。
             # 例如: <p class="price_color">￡51.77</p>
             jianjie = book.xpath('string(./p[1])').extract_first()
+            # jianjie = book.xpath('./p[1]/text()').extract_first()
             yield {
                '书名': name,
                '简介': jianjie,
