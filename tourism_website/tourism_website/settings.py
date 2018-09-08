@@ -88,3 +88,13 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+
+MONGODB_URI = 'mongodb://localhost:27017'
+MONGODB_DB_NAME = 'scrapy_db'
+
+
+ITEM_PIPELINES = {
+    'tourism_website.pipelines.MongoDBPipeline': 403,
+}

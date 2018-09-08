@@ -1,0 +1,2 @@
+# 学习笔记
+settings.py中设置pipline时用tourism_website.pipelines.MongoDBPipeline格式，开头是当前scrapy项目名称
