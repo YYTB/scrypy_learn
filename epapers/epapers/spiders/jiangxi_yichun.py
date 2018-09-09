@@ -28,13 +28,12 @@ class jiangxi_yichunSpider(scrapy.Spider):
         links = le.extract_links(response)
         for link in links:
             yield scrapy.Request(link.url, callback=self.parse_content)
-        # 构造用于匹配下一页链接的正则表达式
-        # patternre = re.compile(r'index_\d*.jhtml')
-        # next_url = patternre.search(response.css('span.page-number a[class="Num on"] + a::attr(onclick)').extract_first()).group()
-        # if next_url:
-        #     # 如果找到下一页的URL，得到绝对路径，构造新的Request 对象
-        #     next_full_url = response.urljoin(next_url)
-        #     yield scrapy.Request(next_full_url, callback=self.parse)
+        le = LinkExtractor(restrict_xpaths='/html/body/table/tr[1]/td[2]/table[2]/tr/td[1]/table[3]//td[@class="px12"]')
+        next_urls = le.extract_links(response)
+        if next_urls:
+            for link in next_urls:
+                # 如果找到下一页的URL，得到绝对路径，构造新的Request 对象
+                yield scrapy.Request(link.url, callback=self.parse)
 
     def parse_content(self, response):
         wenzhang = jiangxi_yichunItem()
