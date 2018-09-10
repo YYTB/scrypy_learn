@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import scrapy,time,re,datetime
+import scrapy,time,datetime,re
 from ..items import jiangxi_yichunItem
 from scrapy.linkextractors import LinkExtractor
 
@@ -9,7 +9,7 @@ class jiangxi_yichunSpider(scrapy.Spider):
     allowed_domains = [
         'newsyc.com',
     ]
-    start_date = datetime.date(2010,7,28)  # 爬取起始日期,转换为datetime.date日期
+    start_date = datetime.date(2018,9,8)  # 爬取起始日期,转换为datetime.date日期,宜春日报电子报最早日上线日期为(2010,7,28)
     finish_date = datetime.date.today()  # 终止爬取日期（默认为当天，即：datetime.date.today()）
     days_delta = (finish_date - start_date).days #获取天数差，结果为整数
     base_url = "http://epaper.newsyc.com/ycrb/html/"
@@ -40,7 +40,9 @@ class jiangxi_yichunSpider(scrapy.Spider):
         wenzhang['url'] = response.url
         wenzhang['content'] = response.xpath('string(/html/body/table[1]/tr[1]/td[2]/table[4]/tr[2])').extract_first()
         wenzhang['title'] = response.xpath('string(/html/body/table[1]/tr[1]/td[2]/table[3]/tbody)').extract_first()
-        # wenzhang['release_time'] = response.xpath('./div/span[@class="date"]/text()').extract_first()
+        # 通过正则表达式匹配url里面的日期，用来写入报纸发行日期，即release_time字段
+        searchdate = re.search(r'(\d{4})-(\d{2})/(\d{2})', wenzhang['url'])
+        wenzhang['release_time'] = '{},{},{}'.format(searchdate.group(1),searchdate.group(2),searchdate.group(3))
         wenzhang['crawl_time'] = time.time()
-        # wenzhang['column'] = response.xpath('//div[@class="dqwz"]/a[3]/text()').extract_first()
+        wenzhang['column'] = response.xpath('/html/body/table[1]/tr[1]/td[1]/table/tr/td/table[2]/tr/td[1]/div/text()').extract_first().lstrip().rstrip('：')
         yield wenzhang
