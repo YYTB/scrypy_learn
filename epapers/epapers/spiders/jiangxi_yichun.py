@@ -38,8 +38,8 @@ class jiangxi_yichunSpider(scrapy.Spider):
     def parse_content(self, response):
         wenzhang = jiangxi_yichunItem()
         wenzhang['url'] = response.url
-        wenzhang['content'] = response.xpath('string(/html/body/table[1]/tr[1]/td[2]/table[4]/tr[2])').extract_first()
-        wenzhang['title'] = response.xpath('string(/html/body/table[1]/tr[1]/td[2]/table[3]/tbody)').extract_first()
+        wenzhang['content'] = response.xpath('string(/html/body/table[1]/tr[1]/td[2]/table[4]/tr[2])').extract_first().lstrip().rstrip()
+        wenzhang['title'] = response.xpath('string(/html/body/table[1]/tr[1]/td[2]/table[3]/tbody)').extract_first().lstrip().rstrip()
         # 通过正则表达式匹配url里面的日期，用来写入报纸发行日期，即release_time字段
         searchdate = re.search(r'(\d{4})-(\d{2})/(\d{2})', wenzhang['url'])
         wenzhang['release_time'] = '{},{},{}'.format(searchdate.group(1),searchdate.group(2),searchdate.group(3))

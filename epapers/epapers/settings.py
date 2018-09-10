@@ -90,3 +90,11 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 LOG_STDOUT = True
+
+MONGODB_URI = 'mongodb://localhost:27017'
+MONGODB_DB_NAME = 'scrapy_db'
+
+
+ITEM_PIPELINES = {
+    'epapers.pipelines.MongoDBPipeline': 403,
+}
