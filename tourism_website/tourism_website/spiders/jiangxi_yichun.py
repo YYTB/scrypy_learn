@@ -32,8 +32,8 @@ class jiangxi_yichunSpider(scrapy.Spider):
         wenzhang = jiangxi_yichunItem()
         wenzhang['url'] = response.url
         sel = response.css('div.content-area')
-        wenzhang['content'] = sel.xpath('string(./div[@class="content"])').extract_first()
-        wenzhang['title'] = sel.xpath('string(./div[@class="content_tit"])').extract_first()
+        wenzhang['content'] = sel.xpath('string(./div[@class="content"])').extract_first().lstrip().rstrip()
+        wenzhang['title'] = sel.xpath('string(./div[@class="content_tit"])').extract_first().lstrip().rstrip()
         wenzhang['release_time'] = sel.xpath('./div/span[@class="date"]/text()').extract_first()
         wenzhang['crawl_time'] = time.time()
         wenzhang['column'] = response.xpath('//div[@class="dqwz"]/a[3]/text()').extract_first()
