@@ -9,7 +9,7 @@ class jiangxi_yichunSpider(scrapy.Spider):
     allowed_domains = [
         'newsyc.com',
     ]
-    start_date = datetime.date(2018,9,8)  # 爬取起始日期,转换为datetime.date日期,宜春日报电子报最早日上线日期为(2010,7,28)
+    start_date = datetime.date(2010,7,28)  # 爬取起始日期,转换为datetime.date日期,宜春日报电子报最早日上线日期为(2010,7,28)
     finish_date = datetime.date.today()  # 终止爬取日期（默认为当天，即：datetime.date.today()）
     days_delta = (finish_date - start_date).days #获取天数差，结果为整数
     base_url = "http://epaper.newsyc.com/ycrb/html/"
