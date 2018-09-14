@@ -92,7 +92,7 @@ ROBOTSTXT_OBEY = True
 
 
 MONGODB_URI = 'mongodb://192.168.1.12:27017'
-MONGODB_DB_NAME = 'epapers'
+MONGODB_DB_NAME = 'tourism_website'
 
 
 ITEM_PIPELINES = {

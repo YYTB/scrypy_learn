@@ -92,7 +92,7 @@ ROBOTSTXT_OBEY = True
 LOG_STDOUT = True
 
 MONGODB_URI = 'mongodb://192.168.1.12:27017'
-MONGODB_DB_NAME = 'scrapy_db'
+MONGODB_DB_NAME = 'epapers'
 
 
 ITEM_PIPELINES = {
