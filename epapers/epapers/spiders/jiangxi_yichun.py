@@ -38,7 +38,8 @@ class jiangxi_yichunSpider(scrapy.Spider):
     def parse_content(self, response):
         wenzhang = jiangxi_yichunItem()
         wenzhang['url'] = response.url
-        wenzhang['content'] = response.xpath('string(/html/body/table[1]/tr[1]/td[2]/table[4]/tr[2])').extract_first().lstrip().rstrip()
+        # 以下提取报道内容没有用extract_first的原因是为了保留段落划分信息，直接提取为列表
+        wenzhang['content'] = response.xpath('/html/body/table[1]/tr[1]/td[2]/table[4]/tr[2]//p/text()').extract()
         wenzhang['title'] = response.xpath('string(/html/body/table[1]/tr[1]/td[2]/table[3]/tbody)').extract_first().lstrip().rstrip()
         # 通过正则表达式匹配url里面的日期，用来写入报纸发行日期，即release_time字段
         searchdate = re.search(r'(\d{4})-(\d{2})/(\d{2})', wenzhang['url'])
