@@ -106,21 +106,12 @@ class TourismWebsiteSpiderMiddleware(object):
 
 
 class TourismWebsiteDownloaderMiddleware(object):
-
-    def process_request(self, request, spider):
+    def __init__(self, spider):
         db_uri = spider.settings.get('MONGODB_URI', 'mongodb://localhost:27017')
         db_name = spider.settings.get('MONGODB_DB_NAME', 'scrapy_default')
         self.db_client = MongoClient(db_uri)
         self.db = self.db_client[db_name]
+
+    def process_request(self, request, spider):
         if self.db.jiangxi_yichun.count({"url": request.url}) > 0:
-            raise IgnoreRequest
-
-    def process_exception(self, request, exception, spider):
-        # Called when a download handler or a process_request()
-        # (from other downloader middleware) raises an exception.
-
-        # Must either:
-        # - return None: continue processing this exception
-        # - return a Response object: stops process_exception() chain
-        # - return a Request object: stops process_exception() chain
-        pass
+            return http.Response(url=request.url, body=None)
