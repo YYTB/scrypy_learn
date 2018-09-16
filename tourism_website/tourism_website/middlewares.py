@@ -113,4 +113,4 @@ class TourismWebsiteDownloaderMiddleware(object):
         self.db_client = MongoClient(db_uri)
         self.db = self.db_client[db_name]
         if self.db.jiangxi_yichun.count({"url": request.url}) > 0:
-            return spider.Response(url=request.url, body=None)
+            return http.Response(url=request.url, body=None)
