@@ -16,3 +16,9 @@ print(urllist)
 
 searchdate = re.search(r'(\d{4})-(\d{2})/(\d{2})', 'http://epaper.newsyc.com/ycrb/html/2018-09/10/content_691327.htm')
 print('{},{},{}'.format(searchdate.group(1),searchdate.group(2),searchdate.group(3)))
+
+print(str(datetime.date.today()).split('-'))
+riqi_s = str(datetime.date.today()).split('-')
+base_url = "http://epaper.newsyc.com/ycrb/html"
+start_urls = ['{}/{}-{}/{}/node_2.htm'.format(base_url, riqi_s[0], riqi_s[1], riqi_s[2])]
+print(start_urls)

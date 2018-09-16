@@ -9,7 +9,6 @@ from scrapy import signals, http
 from pymongo import MongoClient
 
 
-
 class TourismWebsiteSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the

@@ -5,19 +5,11 @@ from scrapy.linkextractors import LinkExtractor
 
 class jiangxi_yichunSpider(scrapy.Spider):
     # 每一个爬虫的唯一标识
-    name = "jiangxi_yichun"
+    name = "jiangxi_yichun_byday"
     allowed_domains = ['newsyc.com']
-    start_date = datetime.date(2010,7,28)  # 爬取起始日期,转换为datetime.date日期,宜春日报电子报最早日上线日期为(2010,7,28)
-    finish_date = datetime.date.today()  # 终止爬取日期（默认为当天，即：datetime.date.today()）
-    days_delta = (finish_date - start_date).days #获取天数差，结果为整数
+    riqi_s = str(datetime.date.today()).split('-')
     base_url = "http://epaper.newsyc.com/ycrb/html"
-    start_urls = []
-    # 以下用for循环枚举抓取日期区间内的所有日期，并将其拆分为字符串列表，用于构建报纸每天url，添加到start_urls
-    for i in range(0, days_delta + 1, 1):
-        riqi = finish_date - datetime.timedelta(days=i)
-        riqi_s = str(riqi).split('-')
-        url = '{}/{}-{}/{}/node_2.htm'.format(base_url, riqi_s[0], riqi_s[1], riqi_s[2])
-        start_urls.append(url)
+    start_urls = ['{}/{}-{}/{}/node_2.htm'.format(base_url, riqi_s[0], riqi_s[1], riqi_s[2])]
 
     def parse(self, response):
         le = LinkExtractor(restrict_xpaths='/html/body/table/tr[1]/td[1]/table/tr[1]/td/table[3]/tr/td[2]/table')
