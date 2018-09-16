@@ -93,6 +93,7 @@ ROBOTSTXT_OBEY = True
 
 MONGODB_URI = 'mongodb://192.168.1.12:27017'
 MONGODB_DB_NAME = 'tourism_website'
+MONGO_COLL = 'jiangxi_yichun'
 
 
 ITEM_PIPELINES = {
