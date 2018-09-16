@@ -6,8 +6,7 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
-from scrapy.utils.project import get_project_settings
-import pymongo
+from pymongo import MongoClient
 
 
 
@@ -107,13 +106,11 @@ class TourismWebsiteSpiderMiddleware(object):
 
 
 class TourismWebsiteDownloaderMiddleware(object):
-    # 初始化过滤器（使用mongodb过滤）
-    def __init__(self):
-        self.settings = get_project_settings()
-        self.client = pymongo.MongoClient(self.settings['MONGODB_URI'])
-        self.db = self.client[self.settings['MONGODB_DB_NAME']]
-        self.coll = self.db[self.settings['MONGO_COLL']]
 
     def process_request(self, request, spider):
-        if self.coll.count({"url": request.url}) > 0:
+        db_uri = spider.settings.get('MONGODB_URI', 'mongodb://localhost:27017')
+        db_name = spider.settings.get('MONGODB_DB_NAME', 'scrapy_default')
+        self.db_client = MongoClient(db_uri)
+        self.db = self.db_client[db_name]
+        if self.db.jiangxi_yichun.count({"url": request.url}) > 0:
             return spider.Response(url=request.url, body=None)
