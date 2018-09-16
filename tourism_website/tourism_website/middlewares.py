@@ -113,4 +113,14 @@ class TourismWebsiteDownloaderMiddleware(object):
         self.db_client = MongoClient(db_uri)
         self.db = self.db_client[db_name]
         if self.db.jiangxi_yichun.count({"url": request.url}) > 0:
-            return http.Response(url=request.url, body=None)
+            raise IgnoreRequest
+
+    def process_exception(self, request, exception, spider):
+        # Called when a download handler or a process_request()
+        # (from other downloader middleware) raises an exception.
+
+        # Must either:
+        # - return None: continue processing this exception
+        # - return a Response object: stops process_exception() chain
+        # - return a Request object: stops process_exception() chain
+        pass
